@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0046)http://ace.delos.com/TESTDATA/JAN08.cowrun.htm -->
+<HTML><HEAD><TITLE>USACO JAN08 cowrun Analysis</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<META content="MSHTML 6.00.2600.0" name=GENERATOR></HEAD>
+<BODY bgColor=#ffffff>
+<CENTER><IMG height=118 src="cowrun.files/cow1.jpg" width=742></CENTER>
+<H2>USACO JAN08 Problem 'cowrun' Analysis</H2>
+<H4>by Neal Wu</H4>
+<P>This is a straightforward dynamic programming (DP) problem. To solve the 
+problem, we want to find, for each k such that 0 &lt;= k &lt;= N, the maximum 
+possible distance Bessie could have run after the first k minutes, if she has a 
+rest factor of 0. (For example, if we can obtain a distance of 14 after 5 
+minutes with a rest factor of 0, or we can obtain a distance of 15 after 5 
+minutes with a rest factor of 0, we would always choose the second over the 
+first.) Clearly, the best such value for 0 is 0. Then, for each minute i of the 
+N minutes, we can compute all of the next values possible with the following 
+method:</P>
+<P>-First, try to not run during the minute, and see if this produces an 
+improvement. (Thus, check if the best value for i is better than the one for i + 
+1.)</P>
+<P>-Then, for each number k from 1 to M, let Bessie run for exactly k minutes 
+and then rest for k minutes. See if this new value produces a greater value than 
+the best value for i + 2k (which is the number of minutes finished after running 
+for k minutes and resting for another k minutes).</P>
+<P>Thus, since we do M updates for each of the N minutes, our total complexity 
+is O(NM). The following is a sample solution:</P><PRE>#include &lt;cstdio&gt;
+using namespace std;
+
+FILE *fout = fopen ("cowrun.out", "w");
+FILE *fin = fopen ("cowrun.in", "r");
+
+const int MAXN = 10005;
+
+int N, M;
+int dist [MAXN], best [MAXN];
+
+int main ()
+{
+    fscanf (fin, "%d %d", &amp;N, &amp;M);
+
+    for (int i = 0; i &lt; N; i++)
+        fscanf (fin, "%d", dist + i);
+
+
+    for (int i = 0; i &lt; N; i++)
+    {
+// skip the value
+        if (best [i] &gt; best [i + 1])
+            best [i + 1] = best [i];
+
+        int sum = best [i], pos = i;
+
+        for (int j = 0; j &lt; M &amp;&amp; pos &lt; N; j++)
+        {
+// update each value
+            sum += dist [i + j];
+            pos += 2;
+
+            if (sum &gt; best [pos])
+                best [pos] = sum;
+        }
+    }
+
+    fprintf (fout, "%d\n", best [N]);
+
+    return 0;
+}
+</PRE></BODY></HTML>

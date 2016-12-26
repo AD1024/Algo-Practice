@@ -1,0 +1,53 @@
+<meta charset="UTF-8">
+<title></title>
+<script type="text/javascript">
+function Change()
+{
+var url = document.getElementById("text1").value
+var arr = url.split("&")
+var shareid = arr[0].split("=")[1]
+var uk = arr[1].split("=")[1]
+var songurl = "http://xxx.com/baidu.php/"+shareid+"/"+uk+"/"
+<!-- 此处换成你的域名 -->
+document.getElementById("text2").value = songurl
+}
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+;
+<table border="0" align="center" cellpadding="0" cellspacing="0" class="bgbk">
+<tbody><tr>
+<td height="10" colspan="2"></td>
+</tr>
+<tr>
+<th>例 子：</th>
+<td bgcolor="#FFFFFF" class="wbk"><div align="center">
+<a href="http://pan.baidu.com/share/link?shareid=461551&uk=2668225758" target="_blank">http://pan.baidu.com/share/link?shareid=461551&uk=2668225758;
+</a></div></td></tr><tr>
+<td height="10" colspan="2"></td>
+</tr>
+<tr class="bgbk">
+<th><div align="right">分享地址：</div></th>
+<td>
+<div align="left">
+<input type="TEXT" class="wbk" id="text1" value="" size="100">
+</div>
+</td>
+</tr>
+<tr class="bgbk">
+<th><div align="right">外链地址：</div></th>
+<td>
+<div align="left">
+<input type="TEXT" class="wbk" id="text2" value="" size="100">
+</div>
+</td>
+</tr>
+<tr>
+<td height="10" colspan="2"></td>
+</tr>
+<tr class="bgbk">
+<td colspan="2"><div align="center">
+<input type="BUTTON" value="转换" onclick="Change()">
+</div></td>
+</tr>
+</tbody></table>

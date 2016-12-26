@@ -1,0 +1,140 @@
+\documentclass[11pt,a4paper,oneside]{article}
+\usepackage[english]{babel}
+\usepackage{olymp}
+\usepackage[dvips]{graphicx}
+\usepackage{color}
+\usepackage{colortbl}
+%\usepackage{expdlist}
+%\usepackage{mfpic}
+%\usepackage{comment}
+\usepackage{multirow}
+
+\usepackage{xeCJK}
+
+\setCJKmainfont[BoldFont={Hei}]
+{SimSun}
+\setCJKmonofont{FangSong}
+
+\renewcommand{\contestname}{
+NOIp' 2013 Training Series, Contest \#4 \\
+ftiasch, \today
+}    
+
+\begin{document}
+
+\begin{problem}{Tree}{tree.in}{tree.out}{1 second} 
+
+    给出$N$个点的树和$K$，问能否把树划分成$N / K$个连通块，且每个连通块的点数都是$K$。
+
+    \InputFile
+
+    第$1$行，$1$个整数$T$，表示数据组数。接下来$T$组数据，对于每组数据：
+
+    第$1$行，$2$个整数$N, K$。
+
+    接下来$(N - 1)$行，每行$2$个整数$A_i, B_i$，表示边$(A_i, B_i$。点用$1, 2, \dots, N$编号。
+
+    \OutputFile
+
+    对于每组数据，输出\texttt{YES}或\texttt{NO}。
+
+    \Example
+
+    \begin{example}
+        \exmp{
+            2
+            4 2
+            1 2
+            2 3
+            3 4
+            4 2
+            1 2
+            1 3
+            1 4
+        }{
+            YES
+            NO
+        }%
+    \end{example}
+
+    \Note
+    
+    \begin{itemize}
+        \item 对于$60\%$的数据，$1 \leq N, K \leq 10^3$；
+
+        \item 对于$100\%$的数据，$1 \leq T \leq 10$，$1 \leq N, K \leq 10^5$。
+    \end{itemize}
+
+\end{problem}
+
+\begin{problem}{Graph}{graph.in}{graph.out}{1 second} 
+    
+    给出$N$个点，$M$条边的\textbf{有向}图，对于每个点$v$，求$A(v)$表示从点$v$出发，能到达的编号最大的点。
+
+    \InputFile
+
+    第$1$行，$2$个整数$N, M$。
+
+    接下来$M$行，每行$2$个整数$U_i, V_i$，表示边$\langle U_i, V_i \rangle$。点用$1, 2, \dots, N$编号。
+
+    \OutputFile
+
+    $N$个整数$A(1), A(2), \dots, A(N)$。
+
+    \Example
+
+    \begin{example}
+        \exmp{
+            4 3
+            1 2
+            2 4
+            4 3
+        }{
+            4 4 3 4
+        }%
+    \end{example}
+
+    \Note
+    
+    \begin{itemize}
+        \item 对于$60\%$的数据，$1 \leq N, K \leq 10^3$；
+
+        \item 对于$100\%$的数据，$1 \leq N, M \leq 10^5$。
+    \end{itemize}
+
+\end{problem}
+
+\begin{problem}{Sequence}{sequence.in}{sequence.out}{1 sequence}
+
+    给出序列$A_1, A_2, \dots, A_N$，求$$\sum_{1 \leq i \leq j \leq N}(A_i \oplus A_{i + 1} \oplus \dots \oplus A_j)$$的值。其中，$\oplus$表示按位异或。
+
+    \InputFile
+
+    第$1$行，$1$个整数$N$。
+
+    第$2$行，$N$个整数$A_1, A_2, \dots, A_N$。
+
+    \OutputFile
+
+    \Example
+
+    \begin{example}
+        \exmp{
+            2
+            1 2
+        }{
+            6
+        }%
+    \end{example}
+
+    \Note
+    \begin{itemize}
+        \item 对于$60\%$的数据，$1 \leq N \leq 10^3$；
+
+        \item 对于$100\%$的数据，$1 \leq N \leq 10^5, 0 \leq A_i < 2^{16}$。
+    \end{itemize}
+
+\end{problem}
+
+
+\end{document}

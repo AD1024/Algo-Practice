@@ -1,0 +1,32 @@
+def test_case(*args)
+  $TEST_COUNT ||= 0
+
+  $TEST_COUNT += 1
+  id = "%02d" %[$TEST_COUNT]
+
+  task :default => "#{id}.out"
+  file "#{id}.out" => ["#{id}.in", $SOLUTION] do
+    sh "./#{$SOLUTION} < #{id}.in > #{id}.out"
+  end
+  file "#{id}.in" => ['Rakefile'] do |t|
+    srand t.name.to_i
+    File.open("#{id}.in", 'w') do |f|
+      f.puts generate(*args)
+    end
+  end
+end
+
+rule '.exe' => '.cpp' do |t|
+  sh "g++ #{t.source} -o#{t.name}"
+end
+
+def generate(ns)
+  n = rand(ns)
+  [n, [*1..n].map { rand(1 << 16) }.join(' ')]
+end
+
+$SOLUTION = 'sequence.exe'
+5.times { test_case 1000 }
+test_case 1000..1000
+3.times { test_case 50000..100000 }
+test_case 100000..100000

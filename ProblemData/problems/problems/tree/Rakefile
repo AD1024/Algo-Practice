@@ -1,0 +1,60 @@
+def test_case(*args)
+  $TEST_COUNT ||= 0
+
+  $TEST_COUNT += 1
+  id = "%02d" %[$TEST_COUNT]
+
+  task :default => "#{id}.out"
+  file "#{id}.out" => ["#{id}.in", $SOLUTION] do
+    sh "./#{$SOLUTION} < #{id}.in > #{id}.out"
+  end
+  file "#{id}.in" => ['Rakefile'] do |t|
+    srand t.name.to_i
+    File.open("#{id}.in", 'w') do |f|
+      f.puts generate(*args)
+    end
+  end
+end
+
+rule '.exe' => '.cpp' do |t|
+  sh "g++ #{t.source} -o#{t.name}"
+end
+
+def generate_tree(n, offset)
+  nodes = [*offset...offset + n].shuffle
+  [*1...n].map do |i|
+    [nodes[i], nodes[rand(i)]].shuffle
+  end.shuffle
+end
+
+def generate_test(ns)
+  if [:yes, :no].sample == :yes
+    n = rand(ns) + 1
+    k = rand(n) + 1
+    n -= n % k
+
+    nodes = [*1..n].shuffle
+    edges = []
+    generate_tree(n / k, 0).each do |a, b|
+      edges << [a * k + rand(k), b * k + rand(k)].shuffle
+    end
+    (n / k).times do |i|
+      edges.concat(generate_tree(k, i * k))
+    end
+
+    [[n, k].join(' '),
+     *edges.map { |a, b| [nodes[a], nodes[b]].join(' ') }.shuffle]
+  else
+    n = rand(ns)
+    [[n, rand(1..n)].join(' '), *generate_tree(n, 1).map { |s| s.join(' ') }]
+  end
+end
+
+def generate(ns)
+  t = rand(1..10)
+  [t, *[*1..t].map { generate_test(ns) }]
+end
+
+$SOLUTION = 'tree.exe'
+6.times { test_case 1000 } 
+4.times { test_case 100000 } 

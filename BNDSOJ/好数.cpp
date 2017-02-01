@@ -1,45 +1,65 @@
-#include <iostream>
-#include <cstdio>
-#include <cstring>
-#include <algorithm>
-#include <cstdlib>
+#include<iostream>
+#include<cstdio>
+#include<cstdlib>
+#include<cstring>
+#include<algorithm>
+#define ll long long
 using namespace std;
 
-/*
-0
-1
-10
-11
-100
-101
-110
-111
-1000
-1001
-1010
+int f[50][2][2][2];
 
+int count(int x)
+{
+    if (x<=0) return 0;
+    int a1=0,a[50];
+    while (x)
+    {
+        a[++a1]=x%2;
+        x/=2;
+    }
+    a[a1+1]=-1;
+    int s=0;
+    for (int i=1;i<a1;i++)
+        s+=f[i][1][1][0]+f[i][1][0][1]+f[i][1][1][1];
+    int flag=0;
+    for (int i=a1-1;i>=1;i--)
+    {
+        if (a[i])
+        {
+            if (flag) s+=1<<(i-1);
+            else if (!a[i+1]&&!a[i+2]) s+=1<<(i-1);
+            else if (!a[i+1]) s+=f[i-1][0][1][0]+f[i-1][0][1][1]+f[i-1][0][0][0]+f[i-1][0][0][1]+f[i-1][1][1][0]+f[i-1][1][0][1]+f[i-1][1][1][1];
+            else s+=f[i][0][1][0]+f[i][0][0][1]+f[i][0][1][1];
+        }
+        if (a[i]==a[i+1]&&a[i+1]==a[i+2]) flag=1;
+    }
+    return s;
+}
 
-1011
-1100
-1101
-1110
-1111
-*/
-
-
-
-int main(){
-	int l,r;cin>>l>>r;
-	int ans=0;
-	for(register int i=l;i<=r;++i){
-		if(!(i&(i-1))){
-			if(i<4) continue;
-			//cout<<i<<' ';
-			ans++;
-		}else{
-			if(i%5)
-		}
-	}
-	cout<<ans;
-	return 0;
+int main()
+{
+    f[1][1][0][0]=f[1][0][0][0]=1;
+    f[3][1][0][1]=f[3][0][1][0]=1;
+    f[2][0][0][0]=f[2][1][0][0]=2;
+    f[3][0][0][0]=f[3][1][0][0]=3;
+    for (int i=4;i<=40;i++)
+    {
+        f[i][0][0][0]=f[i-1][1][0][0]+f[i-2][1][0][0];
+        f[i][0][0][1]=f[i-2][1][0][1]+f[i-1][1][0][1];
+        f[i][0][1][0]=f[i-1][1][1][0]+f[i-2][1][1][0]+f[i-2][0][0][0]+f[i-2][0][1][0];
+        f[i][0][1][1]=f[i-1][1][1][1]+f[i-2][1][1][1]+f[i-2][0][0][1]+f[i-2][0][1][1];
+        f[i][1][0][0]=f[i-1][0][0][0]+f[i-2][0][0][0];
+        f[i][1][1][0]=f[i-1][0][1][0]+f[i-2][0][1][0];
+        f[i][1][0][1]=f[i-1][0][0][1]+f[i-2][0][0][1]+f[i-2][1][0][0]+f[i-2][1][0][1];
+        f[i][1][1][1]=f[i-1][0][1][1]+f[i-2][0][1][1]+f[i-2][1][1][0]+f[i-2][1][1][1];
+    }
+    int l,r;
+    scanf("%d%d",&l,&r);
+    int s=0;
+    if (r==2147483647)
+    {
+        r--;
+        s++;
+    }
+    printf("%d",count(r+1)-count(l)+s);
 }

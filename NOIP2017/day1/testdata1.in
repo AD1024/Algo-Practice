@@ -1,0 +1,68 @@
+7
+10 O(n^5)
+F a 55 n
+F b 66 n
+F c 57 n
+F d 17 53
+F e 81 n
+E
+E
+E
+E
+E
+8 O(n^1)
+F a 5 n
+F b 46 86
+F c 58 n
+F d 20 70
+E
+E
+E
+E
+8 O(n^4)
+F a 8 89
+F b 10 96
+F c 11 n
+F d 82 n
+E
+E
+E
+E
+10 O(n^2)
+F a 39 86
+F b 19 76
+F c 7 68
+F d 97 n
+F e 38 77
+E
+E
+E
+E
+E
+4 O(n^1)
+F a 23 n
+F b 98 n
+E
+E
+10 O(1)
+F a 37 56
+F b 48 n
+F c 13 n
+F d 32 n
+F e 92 n
+E
+E
+E
+E
+E
+10 O(n^5)
+F a 44 61
+F b 59 n
+F c 32 n
+F d 93 n
+F e 17 n
+E
+E
+E
+E
+E

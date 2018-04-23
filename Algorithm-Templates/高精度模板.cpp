@@ -40,7 +40,7 @@ public:
     inline bool operator >= (const BigInt&) const ;
     friend inline istream &operator >> (istream&, BigInt&);
     friend inline ostream &operator << (ostream&, BigInt&);
-} dp[88][88], ans;
+};
 
 const unsigned sys(100000); // 压位
 
@@ -145,12 +145,6 @@ BigInt BigInt:: operator ^ (unsigned index) const {
         if (index & 1)
             result *= base;
     return result;
-}
-
-Bigint Bigint::operator %(const BigInt& num)const{
-    BigInt res=*this/num;
-    res=*this-res*num;
-    return res;
 }
 
 inline bool BigInt:: operator < (const BigInt &num) const {
